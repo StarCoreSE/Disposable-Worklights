@@ -42,7 +42,7 @@ namespace Digi.AttachedLights
 
         void Setup()
         {
-            Add(ExampleConfig, typeof(MyObjectBuilder_BatteryBlock), "WorklightSmall"); // vanilla control panels only
+            Add(ExampleConfig, typeof(MyObjectBuilder_CubeBlock), "WorklightSmall"); // vanilla control panels only
         }
 
         // These are functions that get called for every dummy in the block so you can configure each dummy differently
@@ -54,7 +54,7 @@ namespace Digi.AttachedLights
 
             // Point light properties
             light.LightOn = true;
-            light.Color = new Color(0, 255, 0); // RGB
+            light.Color = new Color(255, 255, 255); // RGB
             light.Range = 5f;
             light.Falloff = 1f;
             light.Intensity = 5f;
@@ -64,23 +64,23 @@ namespace Digi.AttachedLights
             // Spotlight properties
             light.LightType = MyLightType.SPOTLIGHT;
             light.ReflectorOn = true;
-            light.ReflectorColor = new Color(255, 155, 0); // RGB
+            light.ReflectorColor = new Color(255, 255, 255); // RGB
             light.ReflectorIntensity = 10f;
             light.ReflectorRange = 100; // how far the projected light goes
-            light.ReflectorConeDegrees = 90; // projected light angle in degrees, max 179.
-            light.ReflectorTexture = @"Textures\Lights\reflector_large.dds"; // NOTE: for textures inside your mod you need to use: Utils.GetModTextureFullPath(@"Textures\someFile.dds");
+            light.ReflectorConeDegrees = 170; // projected light angle in degrees, max 179.
+            light.ReflectorTexture = @"Textures\Lights\reflector_3.dds"; // NOTE: for textures inside your mod you need to use: Utils.GetModTextureFullPath(@"Textures\someFile.dds");
             light.CastShadows = true;
             //light.ReflectorGlossFactor = <num>f; // affects gloss in some way
 
             // Glare properties... which don't seem to work...
             light.GlareOn = true;
             light.GlareSize = new Vector2(1, 1); // glare size in X and Y.
-            light.GlareIntensity = 2;
+            light.GlareIntensity = 1f;
             light.GlareMaxDistance = 1;
             light.SubGlares = Utils.GetFlareDefinition("InteriorLight").SubGlares; // subtype name from flares.sbc
             light.GlareType = MyGlareTypeEnum.Normal; // usable values: MyGlareTypeEnum.Normal, MyGlareTypeEnum.Distant, MyGlareTypeEnum.Directional
-            light.GlareQuerySize = 0.5f; // glare "box" size, affects occlusion and fade occlussion
-            light.GlareQueryShift = 1f; // no idea
+            light.GlareQuerySize = 1f; // glare "box" size, affects occlusion and fade occlussion
+            light.GlareQueryShift = 1f; // no idea  
 
 
 
