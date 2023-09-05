@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Sandbox.Definitions;
 using Sandbox.Game.Entities;
 using Sandbox.Game.Lights;
@@ -43,6 +44,9 @@ namespace Digi.AttachedLights
 
             if(maxViewRangeSq > 0)
                 session.ViewDistanceChecks.Add(Block.EntityId, RangeCheck);
+
+            DeactivateGridPhysics(block);
+
         }
 
         void FindLightDummies()
@@ -172,7 +176,6 @@ namespace Digi.AttachedLights
 
                     if(light.LightType == MyLightType.SPOTLIGHT)
                         light.ReflectorOn = on;
-
                     light.UpdateLight();
                 }
             }
@@ -188,5 +191,20 @@ namespace Digi.AttachedLights
             inViewRange = inRange;
             SetLights(inViewRange ? Block.IsWorking : false);
         }
+
+        private void DeactivateGridPhysics(IMyCubeBlock block)
+        {
+            var cubeGrid = block.CubeGrid;
+
+            if (cubeGrid != null)
+            {
+                var gridPhysics = cubeGrid.Physics;
+                if (gridPhysics != null)
+                {
+                    gridPhysics.Deactivate();
+                }
+            }
+        }
+
     }
 }

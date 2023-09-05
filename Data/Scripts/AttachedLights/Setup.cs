@@ -4,6 +4,7 @@ using Sandbox.Game.Lights;
 using Sandbox.ModAPI;
 using VRage.Game;
 using VRage.Game.Components;
+using VRage.Game.ModAPI;
 using VRageMath;
 using VRageRender.Lights;
 
@@ -45,15 +46,18 @@ namespace Digi.AttachedLights
             Add(ExampleConfig, typeof(MyObjectBuilder_CubeBlock), "WorklightSmall"); // vanilla control panels only
         }
 
+
+
         // These are functions that get called for every dummy in the block so you can configure each dummy differently
         LightConfigurator ExampleConfig = (dummyName, light, blockLogic) =>
         {
+
             //blockLogic.MaxViewRange = 50; // defines at which range light turns off; it's faster computationally to not define this if you don't need it.
 
             // comment out any section/property you don't want to set
 
             // Point light properties
-            light.LightOn = true;
+            light.LightOn = false;
             light.Color = new Color(255, 255, 255); // RGB
             light.Range = 5f;
             light.Falloff = 1f;
@@ -67,7 +71,7 @@ namespace Digi.AttachedLights
             light.ReflectorColor = new Color(255, 255, 255); // RGB
             light.ReflectorIntensity = 10f;
             light.ReflectorRange = 100; // how far the projected light goes
-            light.ReflectorConeDegrees = 170; // projected light angle in degrees, max 179.
+            light.ReflectorConeDegrees = 150; // projected light angle in degrees, max 179.
             light.ReflectorTexture = @"Textures\Lights\reflector_3.dds"; // NOTE: for textures inside your mod you need to use: Utils.GetModTextureFullPath(@"Textures\someFile.dds");
             light.CastShadows = true;
             //light.ReflectorGlossFactor = <num>f; // affects gloss in some way
@@ -81,6 +85,7 @@ namespace Digi.AttachedLights
             light.GlareType = MyGlareTypeEnum.Normal; // usable values: MyGlareTypeEnum.Normal, MyGlareTypeEnum.Distant, MyGlareTypeEnum.Directional
             light.GlareQuerySize = 1f; // glare "box" size, affects occlusion and fade occlussion
             light.GlareQueryShift = 1f; // no idea  
+            
 
 
 
@@ -114,5 +119,8 @@ namespace Digi.AttachedLights
             //light.ReflectorDirection
             //light.ReflectorUp
         };
+
+
+
     }
 }
