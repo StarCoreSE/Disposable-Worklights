@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Timers;
 using Sandbox.Definitions;
 using Sandbox.Game.Entities;
 using Sandbox.Game.Lights;
@@ -32,12 +33,16 @@ namespace Digi.AttachedLights
         private bool scannedForDummies = false;
         private bool inViewRange = true;
         private float maxViewRangeSq;
+        private DateTime placementTime;
+        private System.Timers.Timer timer;
+
 
         public BlockLogic(AttachedLightsSession session, IMyCubeBlock block, LightConfigurator configurator)
         {
             Session = session;
             Block = block;
             this.configurator = configurator;
+
 
             Block.IsWorkingChanged += WorkingChanged;
             WorkingChanged(Block);
@@ -46,6 +51,19 @@ namespace Digi.AttachedLights
                 session.ViewDistanceChecks.Add(Block.EntityId, RangeCheck);
 
             DeactivateGridPhysics(block);
+
+            // Store the current time as the placement time
+            placementTime = DateTime.Now;
+
+            // Create and configure a timer
+            timer = new System.Timers.Timer();
+            timer.Interval = TimeSpan.FromSeconds(20).TotalMilliseconds; // Set the timer interval to 1 hour
+            timer.Elapsed += CheckAndDeleteBlock;
+            timer.AutoReset = false; // Stop the timer after the first elapsed event
+            timer.Start();
+
+
+
 
         }
 
@@ -203,6 +221,19 @@ namespace Digi.AttachedLights
                 {
                     gridPhysics.Deactivate();
                 }
+            }
+        }
+
+        private void CheckAndDeleteBlock(object sender, ElapsedEventArgs e)
+        {
+            // Calculate the elapsed time since placement
+            TimeSpan elapsedTime = DateTime.Now - placementTime;
+
+            // Check if 1 hour has passed
+            if (elapsedTime.TotalSeconds >= 20)
+            {
+                // Delete the block from the grid
+                Block.CubeGrid.RazeBlock(Block.Position);
             }
         }
 
