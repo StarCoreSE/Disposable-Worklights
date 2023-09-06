@@ -58,7 +58,7 @@ namespace Digi.AttachedLights
 
             // Create and configure a timer
             timer = new System.Timers.Timer();
-            timer.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds; // Set the timer interval to 1 hour
+            timer.Interval = TimeSpan.FromSeconds(3600).TotalMilliseconds; // Set the timer interval to 1 hour
             timer.Elapsed += CheckAndDeleteBlock;
             timer.AutoReset = false; // Stop the timer after the first elapsed event
             timer.Start();
@@ -231,7 +231,7 @@ namespace Digi.AttachedLights
             TimeSpan elapsedTime = DateTime.Now - placementTime;
 
             // Check if 1 hour has passed
-            if (elapsedTime.TotalSeconds >= 10)
+            if (elapsedTime.TotalSeconds >= 3600)
             {
                 // Delete the block from the grid
                 Block.CubeGrid.RazeBlock(Block.Position);
