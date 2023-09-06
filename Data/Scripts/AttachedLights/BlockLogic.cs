@@ -51,14 +51,14 @@ namespace Digi.AttachedLights
             if(maxViewRangeSq > 0)
                 session.ViewDistanceChecks.Add(Block.EntityId, RangeCheck);
 
-            DeactivateGridPhysics(block);
+            //DeactivateGridPhysics(block);   fuck I didn't need to do it this way
 
             // Store the current time as the placement time
             placementTime = DateTime.Now;
 
             // Create and configure a timer
             timer = new System.Timers.Timer();
-            timer.Interval = TimeSpan.FromSeconds(3600).TotalMilliseconds; // Set the timer interval to 1 hour
+            timer.Interval = TimeSpan.FromSeconds(10).TotalMilliseconds; // Set the timer interval to 1 hour
             timer.Elapsed += CheckAndDeleteBlock;
             timer.AutoReset = false; // Stop the timer after the first elapsed event
             timer.Start();
@@ -215,7 +215,7 @@ namespace Digi.AttachedLights
         {
             var cubeGrid = block.CubeGrid;
 
-            if (cubeGrid != null | MyAPIGateway.Utilities.IsDedicated)
+            if (cubeGrid != null || MyAPIGateway.Utilities.IsDedicated)
             {
                 var gridPhysics = cubeGrid.Physics;
                 if (gridPhysics != null)
@@ -231,7 +231,7 @@ namespace Digi.AttachedLights
             TimeSpan elapsedTime = DateTime.Now - placementTime;
 
             // Check if 1 hour has passed
-            if (elapsedTime.TotalSeconds >= 3600)
+            if (elapsedTime.TotalSeconds >= 10)
             {
                 // Delete the block from the grid
                 Block.CubeGrid.RazeBlock(Block.Position);

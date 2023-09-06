@@ -128,7 +128,7 @@ namespace Digi.AttachedLights
             {
                 var grid = ent as MyCubeGrid;
 
-                if(grid == null || grid.Physics == null || grid.IsPreview)
+                if(grid == null || grid.IsPreview)    //yes grid physics should be null lol lmao          grid.Physics == null 
                     return;
 
                 grid.OnBlockAdded += BlockAdded;
