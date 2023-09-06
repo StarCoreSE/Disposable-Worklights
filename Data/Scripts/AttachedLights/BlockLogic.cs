@@ -10,6 +10,7 @@ using VRage.Game;
 using VRage.Game.Components;
 using VRage.Game.Entity;
 using VRage.Game.ModAPI;
+using VRage.GameServices;
 using VRage.ModAPI;
 using VRageMath;
 
@@ -214,7 +215,7 @@ namespace Digi.AttachedLights
         {
             var cubeGrid = block.CubeGrid;
 
-            if (cubeGrid != null)
+            if (cubeGrid != null | MyAPIGateway.Utilities.IsDedicated)
             {
                 var gridPhysics = cubeGrid.Physics;
                 if (gridPhysics != null)
